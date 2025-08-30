@@ -1,0 +1,13 @@
+<!--start breadcrumb-->
+<div class="py-4 border-bottom">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0"> 
+        <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+        <li class="breadcrumb-item"><a href="javascript:;">Checkout</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Payment Method</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!--end breadcrumb-->

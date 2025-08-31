@@ -143,17 +143,9 @@
               <!-- Action Buttons -->
               <div class="cart-buttons mt-4">
                 <div class="buttons d-flex flex-column gap-3">
-                  <a href="javascript:;" class="btn btn-lg btn-dark btn-ecomm px-5 py-3 flex-grow-1" id="quickViewInquiryBtn">
-                    <i class="bi bi-chat-dots me-2"></i>Send Inquiry
+                  <a href="javascript:;" class="btn btn-lg btn-primary btn-ecomm px-5 py-3 flex-grow-1" id="quickViewDetailsBtn">
+                    <i class="bi bi-eye me-2"></i>View Details
                   </a>
-                  <div class="d-flex gap-2">
-                    <a href="javascript:;" class="btn btn-lg btn-outline-dark btn-ecomm px-4 py-3 flex-grow-1" id="quickViewWishlistBtn">
-                      <i class="bi bi-heart me-2"></i>Wishlist
-                    </a>
-                    <a href="javascript:;" class="btn btn-lg btn-outline-primary btn-ecomm px-4 py-3 flex-grow-1" id="quickViewDetailsBtn">
-                      <i class="bi bi-eye me-2"></i>View Details
-                    </a>
-                  </div>
                 </div>
               </div>
               

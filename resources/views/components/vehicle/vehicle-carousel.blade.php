@@ -1,5 +1,5 @@
 <!-- Main Carousel -->
-<div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+<div id="vehicleDetailCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner rounded shadow">
         @if($vehicle->images->count() > 0)
             @foreach($vehicle->images as $index => $image)
@@ -20,11 +20,11 @@
 
     @if($vehicle->images->count() > 1)
         <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+        <button class="carousel-control-prev" type="button" data-bs-target="#vehicleDetailCarousel"
             data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+        <button class="carousel-control-next" type="button" data-bs-target="#vehicleDetailCarousel"
             data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
         </button>
@@ -38,7 +38,7 @@
             @foreach($vehicle->images as $index => $image)
                 <img src="{{ asset('storage/' . $image->image_path) }}" 
                      class="thumbnail-img {{ $index === 0 ? 'active-thumb' : '' }}"
-                     data-bs-target="#productCarousel" 
+                     data-bs-target="#vehicleDetailCarousel" 
                      data-bs-slide-to="{{ $index }}" 
                      alt="Thumb {{ $index + 1 }}">
             @endforeach

@@ -1,11 +1,13 @@
 <!--start Featured Products slider-->
-<section class="section-padding">
+<section class="section-padding hot-deals-section">
   <div class="container">
     <div class="text-center pb-3">
       <h3 class="mb-0 h3 fw-bold">HOT DEALS</h3>
       <p class="mb-0 text-capitalize">Find hottest deals here.</p>
     </div>
-    <div class="product-thumbs" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 3000, "dots": true, "arrows": true, "responsive": [{"breakpoint": 1200, "settings": {"slidesToShow": 3}}, {"breakpoint": 768, "settings": {"slidesToShow": 2}}, {"breakpoint": 576, "settings": {"slidesToShow": 1}}]}'>
+    
+    <!-- Hot deals content - hidden initially to prevent layout shift -->
+    <div class="product-thumbs hot-deals-content" id="hotDealsContent" style="opacity: 0; visibility: hidden;" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 3000, "dots": true, "arrows": true, "responsive": [{"breakpoint": 1200, "settings": {"slidesToShow": 3}}, {"breakpoint": 768, "settings": {"slidesToShow": 2}}, {"breakpoint": 576, "settings": {"slidesToShow": 1}}]}'>
       @forelse($hotDeals as $vehicle)
         <x-shared.hot-deals-card :vehicle="$vehicle" />
       @empty

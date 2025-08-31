@@ -11,15 +11,14 @@
     
     <!--start page content-->
     <div class="page-content">
+        <!-- Hero Carousel - First and foremost -->
+        @include('components.home.hero-carousel')
+        
         @include('components.shared.breadcrumb')
         
-        <!-- Hero Carousel
-        @include('components.home.hero-carousel') -->
-        
         <!-- Hot Deals Section -->
-        <!-- @if($hotDeals->count() > 0)
-            @include('components.home.hot-deals')
-        @endif -->
+        @include('components.home.hot-deals')
+    
         
         <!-- Features Section -->
         @include('components.home.features')

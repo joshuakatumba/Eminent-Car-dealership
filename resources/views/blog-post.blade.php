@@ -5,7 +5,7 @@
     @include('components.shared.head')
 </head>
 
-<body>
+<body class="blog-post">
     @include('components.shared.page-loader')
     @include('components.shared.header')
     

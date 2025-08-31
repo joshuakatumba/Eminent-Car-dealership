@@ -110,7 +110,7 @@ vehicle_categories
 └── updated_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP ON UPDATE)
 ```
 
-**Sample Data:** Sedan, SUV, Truck, Hatchback, Convertible, Van
+**Sample Data:** Sedan, SUV, Truck, Hatchback, Van
 
 ### 6. **VEHICLE_BRANDS** (Manufacturer Management)
 ```sql
@@ -124,7 +124,7 @@ vehicle_brands
 └── updated_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP ON UPDATE)
 ```
 
-**Sample Data:** Toyota, Honda, Ford, Chevrolet, BMW, Mercedes-Benz
+**Sample Data:** Toyota, Honda, Ford, BMW, Mercedes-Benz, Nissan
 
 ### 7. **VEHICLES** (Core Vehicle Data)
 ```sql

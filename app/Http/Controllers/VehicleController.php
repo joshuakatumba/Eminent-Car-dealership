@@ -6,6 +6,7 @@ use App\Models\Vehicle;
 use App\Models\VehicleCategory;
 use App\Models\VehicleBrand;
 use Illuminate\Http\Request;
+use App\Models\VehicleImage; // Added this import for the new method
 
 class VehicleController extends Controller
 {
@@ -91,10 +92,14 @@ class VehicleController extends Controller
             ->limit(4)
             ->get();
 
+        // Get categories and brands for header navigation
+        $categories = VehicleCategory::where('is_active', true)->get();
+        $brands = VehicleBrand::where('is_active', true)->get();
+
         // Get settings
         $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
 
-        return view('vehicles.show', compact('vehicle', 'relatedVehicles', 'settings'));
+        return view('vehicles.show', compact('vehicle', 'relatedVehicles', 'settings', 'categories', 'brands'));
     }
 
     public function search(Request $request)
@@ -167,17 +172,20 @@ class VehicleController extends Controller
         return response()->json($vehicles);
     }
 
+    /**
+     * Get vehicle data for Quick View modal
+     */
     public function quickView($id)
     {
-        $vehicle = Vehicle::with(['category', 'brand', 'images'])
-            ->where('status', 'available')
+        $vehicle = Vehicle::with(['brand', 'category', 'images'])
             ->findOrFail($id);
 
-        // Transform the data for the frontend
-        $vehicleData = [
+        // Format the data for Quick View
+        $quickViewData = [
             'id' => $vehicle->id,
-            'brand' => $vehicle->brand,
             'model' => $vehicle->model,
+            'brand' => $vehicle->brand,
+            'category' => $vehicle->category,
             'description' => $vehicle->description,
             'price' => $vehicle->price,
             'sale_price' => $vehicle->sale_price,
@@ -185,17 +193,53 @@ class VehicleController extends Controller
             'mileage' => $vehicle->mileage,
             'fuel_type' => $vehicle->fuel_type,
             'transmission' => $vehicle->transmission,
-            'engine' => $vehicle->engine,
+            'engine_size' => $vehicle->engine_size,
             'status' => $vehicle->status,
+            'star_rating' => $vehicle->star_rating ?? 4.5, // Default rating
             'images' => $vehicle->images->map(function($image) {
                 return [
                     'id' => $image->id,
-                    'image_path' => asset('storage/' . $image->image_path),
-                    'is_primary' => $image->is_primary
+                    'image_url' => $image->image_url,
+                    'is_featured' => $image->is_primary
                 ];
             })
         ];
 
-        return response()->json($vehicleData);
+        return response()->json($quickViewData);
+    }
+
+    /**
+     * Set an image as primary for a vehicle
+     */
+    public function setPrimaryImage(Request $request, $vehicleId, $imageId)
+    {
+        try {
+            // Find the vehicle and ensure it exists
+            $vehicle = Vehicle::findOrFail($vehicleId);
+            
+            // Find the image and ensure it belongs to this vehicle
+            $image = VehicleImage::where('vehicle_id', $vehicleId)
+                ->where('id', $imageId)
+                ->firstOrFail();
+            
+            // Set all images for this vehicle as non-primary
+            VehicleImage::where('vehicle_id', $vehicleId)
+                ->update(['is_primary' => false]);
+            
+            // Set the selected image as primary
+            $image->update(['is_primary' => true]);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Primary image updated successfully',
+                'image_id' => $imageId
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update primary image: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

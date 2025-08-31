@@ -28,13 +28,7 @@
               
               <div class="position-relative overflow-hidden">
                 <div class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                  <a href="javascript:;" class="wishlist-btn" data-vehicle-id="{{ $vehicle->id }}">
-                    <i class="bi bi-heart"></i>
-                  </a>
-                  <a href="javascript:;" class="inquiry-btn" data-vehicle-id="{{ $vehicle->id }}">
-                    <i class="bi bi-basket3"></i>
-                  </a>
-                                     <a href="javascript:;" class="quick-view-btn" data-vehicle-id="{{ $vehicle->id }}" data-bs-toggle="modal" data-bs-target="#QuickViewModal" title="Quick View">
+                  <a href="javascript:;" class="quick-view-btn" data-vehicle-id="{{ $vehicle->id }}" data-bs-toggle="modal" data-bs-target="#QuickViewModal" title="Quick View">
                      <i class="bi bi-zoom-in"></i>
                    </a>
                 </div>
@@ -83,8 +77,6 @@
               <div class="ribban-available">AVAILABLE</div>
               <div class="position-relative overflow-hidden">
                 <div class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-                  <a href="javascript:;"><i class="bi bi-heart"></i></a>
-                  <a href="javascript:;"><i class="bi bi-basket3"></i></a>
                   <a href="javascript:;" title="Quick View"><i class="bi bi-zoom-in"></i></a>
                 </div>
                 <img src="{{ asset('assets/images/placeholder-vehicle.svg') }}" 

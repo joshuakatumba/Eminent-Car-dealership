@@ -39,14 +39,12 @@ The Brands section has been successfully integrated into the Eminent Car Dealers
 
 #### **American Brands**
 10. **Ford** - `07.webp`
-11. **Chevrolet** - `15.webp`
 12. **Jeep** - `18.webp`
 
 #### **German Brands**
 13. **Volkswagen** - `08.webp`
 14. **BMW** - `09.webp`
 15. **Mercedes-Benz** - `10.webp`
-16. **Audi** - `11.webp`
 17. **Porsche** - `22.webp`
 18. **Opel** - `29.webp`
 

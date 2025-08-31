@@ -23,7 +23,6 @@ class TagExtractionService
         'sedan' => ['Sedan'],
         'truck' => ['Truck'],
         'hatchback' => ['Hatchback'],
-        'convertible' => ['Convertible'],
         'luxury' => ['Luxury'],
         'sports car' => ['Sports', 'Performance'],
         
@@ -70,11 +69,9 @@ class TagExtractionService
         'toyota' => ['Toyota'],
         'honda' => ['Honda'],
         'ford' => ['Ford'],
-        'chevrolet' => ['Chevrolet'],
         'nissan' => ['Nissan'],
         'bmw' => ['BMW', 'Luxury'],
         'mercedes' => ['Mercedes', 'Luxury'],
-        'audi' => ['Audi', 'Luxury'],
         'lexus' => ['Lexus', 'Luxury'],
         'tesla' => ['Tesla', 'Electric'],
         

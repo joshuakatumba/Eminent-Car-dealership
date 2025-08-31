@@ -21,20 +21,23 @@ Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post
 Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout.get');
 
-// Redirect root to login if not authenticated
+// Redirect root to vehicles if authenticated, otherwise to login
 Route::get('/', function () {
     if (!auth()->check()) {
         return redirect()->route('admin.login');
     }
-    return redirect()->route('admin.vehicles');
+    return redirect()->route('admin.vehicles.index');
 })->name('admin.root');
 
 // Admin Routes - Protected with admin.auth and admin middleware
- 
 Route::middleware(['admin.auth', 'admin'])->name('admin.')->group(function () {
-    // Dashboard
-    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    
+    // Admin Index/Home - redirects to vehicles
+    Route::get('/home', function () {
+        return redirect()->route('admin.vehicles.index');
+    })->name('home');
+    
+    // Profile and Settings
     Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
     Route::put('/profile', [AdminController::class, 'updateProfile'])->name('profile.update');
     Route::get('/settings', [AdminController::class, 'settings'])->name('settings.index');
@@ -65,8 +68,6 @@ Route::middleware(['admin.auth', 'admin'])->name('admin.')->group(function () {
     // About Us
     Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us.index');
     Route::put('/about-us', [AboutUsController::class, 'update'])->name('about-us.update');
-    
-
     
     // Contact Messages
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);

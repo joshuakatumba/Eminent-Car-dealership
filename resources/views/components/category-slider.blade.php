@@ -71,19 +71,6 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ route('vehicles.index', ['category' => 'Convertible']) }}">
-                <div class="card">
-                    <div class="card-body top-categories">
-                        <div class="overflow-hidden card-img-top">
-                            <img src="{{ asset('assets/images/categories/06.jpg') }}" class="card-img-top rounded-0" alt="CONVERTIBLE Category">
-                        </div>
-                        <div class="text-center">
-                            <h5 class="mb-1 cartegory-name mt-3 fw-bold">CONVERTIBLE</h5>
-                            <h6 class="mb-0 product-number fw-bold">{{ \App\Models\Vehicle::whereHas('category', function($q) { $q->where('name', 'Convertible'); })->count() }} Products</h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
         </div>
     </div>
 </section>

@@ -96,7 +96,6 @@ class AdminSeeder extends Seeder
             ['name' => 'SUV', 'description' => 'Sport Utility Vehicles'],
             ['name' => 'Truck', 'description' => 'Pickup trucks and commercial vehicles'],
             ['name' => 'Hatchback', 'description' => 'Compact cars with rear hatch'],
-            ['name' => 'Convertible', 'description' => 'Cars with retractable roofs'],
             ['name' => 'Van', 'description' => 'Passenger and cargo vans'],
         ];
 
@@ -109,10 +108,8 @@ class AdminSeeder extends Seeder
             ['name' => 'Toyota', 'description' => 'Japanese automotive manufacturer'],
             ['name' => 'Honda', 'description' => 'Japanese automotive manufacturer'],
             ['name' => 'Ford', 'description' => 'American automotive manufacturer'],
-            ['name' => 'Chevrolet', 'description' => 'American automotive manufacturer'],
             ['name' => 'BMW', 'description' => 'German luxury automotive manufacturer'],
             ['name' => 'Mercedes-Benz', 'description' => 'German luxury automotive manufacturer'],
-            ['name' => 'Audi', 'description' => 'German luxury automotive manufacturer'],
             ['name' => 'Nissan', 'description' => 'Japanese automotive manufacturer'],
             ['name' => 'Hyundai', 'description' => 'South Korean automotive manufacturer'],
             ['name' => 'Kia', 'description' => 'South Korean automotive manufacturer'],

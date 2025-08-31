@@ -128,13 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Update action buttons
-        const inquiryBtn = document.getElementById('quickViewInquiryBtn');
         const detailsBtn = document.getElementById('quickViewDetailsBtn');
-        const wishlistBtn = document.getElementById('quickViewWishlistBtn');
-
-        inquiryBtn.href = `/contact?vehicle=${vehicle.id}`;
         detailsBtn.href = `/vehicles/${vehicle.id}`;
-        wishlistBtn.onclick = () => addToWishlist(vehicle.id);
 
         // Update fullscreen modal title
         document.getElementById('fullscreenVehicleTitle').textContent = `${vehicle.brand?.name || ''} ${vehicle.model || ''}`;
@@ -178,9 +173,20 @@ document.addEventListener('DOMContentLoaded', function () {
             slide.dataset.index = index;
 
             const img = document.createElement('img');
-            img.src = image.image_url || '/assets/images/placeholder-vehicle.svg';
+            // Fix URL to use correct server address
+            let imageUrl = image.image_url || '/assets/images/placeholder-vehicle.svg';
+            if (imageUrl.includes('localhost')) {
+                imageUrl = imageUrl.replace('http://localhost', 'http://127.0.0.1:8000');
+            }
+            img.src = imageUrl;
             img.alt = `Vehicle image ${index + 1}`;
             img.className = 'main-image';
+
+            // Add error handling for image loading
+            img.onerror = function () {
+                this.src = '/assets/images/placeholder-vehicle.svg';
+                console.warn('Failed to load image:', imageUrl);
+            };
 
             slide.appendChild(img);
             slideshowContainer.appendChild(slide);
@@ -198,8 +204,19 @@ document.addEventListener('DOMContentLoaded', function () {
             thumbnail.dataset.index = index;
 
             const img = document.createElement('img');
-            img.src = image.image_url || '/assets/images/placeholder-vehicle.svg';
+            // Fix URL to use correct server address
+            let imageUrl = image.image_url || '/assets/images/placeholder-vehicle.svg';
+            if (imageUrl.includes('localhost')) {
+                imageUrl = imageUrl.replace('http://localhost', 'http://127.0.0.1:8000');
+            }
+            img.src = imageUrl;
             img.alt = `Vehicle thumbnail ${index + 1}`;
+
+            // Add error handling for image loading
+            img.onerror = function () {
+                this.src = '/assets/images/placeholder-vehicle.svg';
+                console.warn('Failed to load thumbnail:', imageUrl);
+            };
 
             thumbnail.appendChild(img);
             thumbnailWrapper.appendChild(thumbnail);
@@ -336,8 +353,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentImage = currentVehicleData.images[currentSlideIndex];
         const fullscreenImage = document.getElementById('fullscreenImage');
 
-        fullscreenImage.src = currentImage.image_url || '/assets/images/placeholder-vehicle.svg';
+        // Fix URL to use correct server address
+        let imageUrl = currentImage.image_url || '/assets/images/placeholder-vehicle.svg';
+        if (imageUrl.includes('localhost')) {
+            imageUrl = imageUrl.replace('http://localhost', 'http://127.0.0.1:8000');
+        }
+        fullscreenImage.src = imageUrl;
         fullscreenImage.alt = `Vehicle image ${currentSlideIndex + 1}`;
+
+        // Add error handling for image loading
+        fullscreenImage.onerror = function () {
+            this.src = '/assets/images/placeholder-vehicle.svg';
+            console.warn('Failed to load fullscreen image:', imageUrl);
+        };
     }
 
     // Handle Keyboard Navigation
@@ -403,13 +431,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         }
-    }
-
-    // Add to Wishlist (placeholder function)
-    function addToWishlist(vehicleId) {
-        // Implement wishlist functionality
-        console.log('Adding vehicle to wishlist:', vehicleId);
-        alert('Vehicle added to wishlist!');
     }
 
     // Pause slideshow on hover

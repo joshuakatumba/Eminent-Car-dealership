@@ -1172,6 +1172,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (confirm('Are you sure you want to delete this image?')) {
                 const imageId = this.dataset.imageId;
                 const vehicleId = this.dataset.vehicleId;
+                const imageItem = this.closest('.col-md-3');
+                const isPrimary = this.closest('.image-actions').querySelector('.badge.bg-success') !== null;
+                const buttonElement = this;
+                
+                // Show loading state
+                buttonElement.disabled = true;
+                buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
                 
                 fetch(`/admin/vehicles/${vehicleId}/images/${imageId}`, {
                     method: 'DELETE',
@@ -1183,22 +1190,111 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        this.closest('.col-md-3').remove();
+                        // Remove the image item
+                        imageItem.remove();
+                        
+                        // If this was the primary image, update the UI to show the new primary image
+                        if (isPrimary) {
+                            const remainingImages = document.querySelectorAll('.image-item');
+                            if (remainingImages.length > 0) {
+                                // The backend should have automatically set the next image as primary
+                                // We need to update the UI to reflect this
+                                updatePrimaryImageAfterDeletion(vehicleId);
+                            }
+                        }
+                        
+                        showAlert('success', 'Image deleted successfully!');
+                    } else {
+                        showAlert('error', 'Failed to delete image.');
+                        // Reset button
+                        buttonElement.disabled = false;
+                        buttonElement.innerHTML = 'Delete';
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error deleting image');
+                    showAlert('error', 'An error occurred while deleting the image.');
+                    // Reset button
+                    buttonElement.disabled = false;
+                    buttonElement.innerHTML = 'Delete';
                 });
             }
         });
     });
+
+    // Function to update primary image UI after deletion
+    function updatePrimaryImageAfterDeletion(vehicleId) {
+        // Get the first remaining image and make it primary
+        const firstImage = document.querySelector('.image-item');
+        if (firstImage) {
+            const imageId = firstImage.dataset.imageId;
+            const imageOverlay = firstImage.querySelector('.image-overlay');
+            const imageActions = imageOverlay.querySelector('.image-actions');
+            
+            // Update the UI to show this image as primary
+            imageActions.innerHTML = `
+                <span class="badge bg-success position-absolute top-0 start-0 m-2">Primary</span>
+                <button type="button" class="btn btn-sm btn-outline-danger delete-image" 
+                        data-image-id="${imageId}" data-vehicle-id="${vehicleId}">
+                    Delete
+                </button>
+            `;
+            
+            // Re-attach event listener to the new delete button
+            const newDeleteBtn = imageActions.querySelector('.delete-image');
+            newDeleteBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to delete this image?')) {
+                    const imageId = this.dataset.imageId;
+                    const vehicleId = this.dataset.vehicleId;
+                    const imageItem = this.closest('.col-md-3');
+                    const isPrimary = this.closest('.image-actions').querySelector('.badge.bg-success') !== null;
+                    const buttonElement = this;
+                    
+                    buttonElement.disabled = true;
+                    buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+                    
+                    fetch(`/admin/vehicles/${vehicleId}/images/${imageId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            imageItem.remove();
+                            if (isPrimary) {
+                                updatePrimaryImageAfterDeletion(vehicleId);
+                            }
+                            showAlert('success', 'Image deleted successfully!');
+                        } else {
+                            showAlert('error', 'Failed to delete image.');
+                            buttonElement.disabled = false;
+                            buttonElement.innerHTML = 'Delete';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showAlert('error', 'An error occurred while deleting the image.');
+                        buttonElement.disabled = false;
+                        buttonElement.innerHTML = 'Delete';
+                    });
+                }
+            });
+        }
+    }
 
     // Handle set primary image
     document.querySelectorAll('.set-primary').forEach(function(button) {
         button.addEventListener('click', function() {
             const imageId = this.dataset.imageId;
             const vehicleId = this.dataset.vehicleId;
+            const buttonElement = this;
+            
+            // Show loading state
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Setting...';
             
             fetch(`/admin/vehicles/${vehicleId}/images/${imageId}/primary`, {
                 method: 'POST',
@@ -1210,15 +1306,97 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    location.reload(); // Reload to update the UI
+                    // Update UI dynamically
+                    updatePrimaryImageUI(imageId, vehicleId);
+                    showAlert('success', 'Primary image updated successfully!');
+                } else {
+                    showAlert('error', 'Failed to update primary image.');
+                    // Reset button
+                    buttonElement.disabled = false;
+                    buttonElement.innerHTML = 'Set Primary';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error setting primary image');
+                showAlert('error', 'An error occurred while setting primary image.');
+                // Reset button
+                buttonElement.disabled = false;
+                buttonElement.innerHTML = 'Set Primary';
             });
         });
     });
+
+    // Function to update the UI after setting primary image
+    function updatePrimaryImageUI(newPrimaryImageId, vehicleId) {
+        const imageGrid = document.getElementById('imageGrid');
+        const imageItems = imageGrid.querySelectorAll('.image-item');
+        
+        imageItems.forEach(function(item) {
+            const imageId = item.dataset.imageId;
+            const imageOverlay = item.querySelector('.image-overlay');
+            const imageActions = imageOverlay.querySelector('.image-actions');
+            
+            if (imageId == newPrimaryImageId) {
+                // This image is now primary
+                imageActions.innerHTML = `
+                    <span class="badge bg-success position-absolute top-0 start-0 m-2">Primary</span>
+                    <button type="button" class="btn btn-sm btn-outline-danger delete-image" 
+                            data-image-id="${imageId}" data-vehicle-id="${vehicleId}">
+                        Delete
+                    </button>
+                `;
+            } else {
+                // This image is no longer primary
+                imageActions.innerHTML = `
+                    <button type="button" class="btn btn-sm btn-outline-primary set-primary" 
+                            data-image-id="${imageId}" data-vehicle-id="${vehicleId}">
+                        Set Primary
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger delete-image" 
+                            data-image-id="${imageId}" data-vehicle-id="${vehicleId}">
+                        Delete
+                    </button>
+                `;
+                
+                // Re-attach event listener to the new Set Primary button
+                const newSetPrimaryBtn = imageActions.querySelector('.set-primary');
+                newSetPrimaryBtn.addEventListener('click', function() {
+                    const imageId = this.dataset.imageId;
+                    const vehicleId = this.dataset.vehicleId;
+                    const buttonElement = this;
+                    
+                    // Show loading state
+                    buttonElement.disabled = true;
+                    buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Setting...';
+                    
+                    fetch(`/admin/vehicles/${vehicleId}/images/${imageId}/primary`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updatePrimaryImageUI(imageId, vehicleId);
+                            showAlert('success', 'Primary image updated successfully!');
+                        } else {
+                            showAlert('error', 'Failed to update primary image.');
+                            buttonElement.disabled = false;
+                            buttonElement.innerHTML = 'Set Primary';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showAlert('error', 'An error occurred while setting primary image.');
+                        buttonElement.disabled = false;
+                        buttonElement.innerHTML = 'Set Primary';
+                    });
+                });
+            }
+        });
+    }
 });
 </script>
 @endsection

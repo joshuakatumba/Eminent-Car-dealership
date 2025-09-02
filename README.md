@@ -1,61 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Eminent Car Dealership
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Modern Laravel-based web application for a car dealership with a public customer-facing site and a secure admin panel. It includes vehicle inventory, brands/categories, blog, testimonials, contact forms, orders/leads, activity logging, image uploads, and more.
 
-## About Laravel
+### Quick Links
+- User site (Docker): `http://localhost:8000`
+- Admin site (Docker): `http://localhost:8001`
+- User site (Local dev script): `http://localhost:8000`
+- Admin site (Local dev script): `http://localhost:8001`
+- Vite dev server (Docker dev): `http://localhost:5173`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Port Summary
+- Production Docker service (`app`):
+  - User: `8000` → container `80`
+  - Admin: `8001` → container `8001`
+- Development Docker service (`app-dev`):
+  - User: `3000` → container `8000`
+  - Admin: `3001` → container `8001`
+  - Vite: `5173` → container `5173`
+- Local PHP dev (via `start-servers.bat`):
+  - User: `8000`
+  - Admin: `8001`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Tech Stack
+- Backend: Laravel (PHP)
+- Frontend tooling: Vite, Tailwind CSS
+- Web server (Docker): Nginx + PHP-FPM
+- Database: SQLite by default (can be swapped)
+- Caching/Queues (optional in dev): Redis
+- Mail testing (dev): MailHog
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Key Features
+- Vehicle inventory with brands, categories, images, and details
+- Admin dashboard for vehicles, customers, sales, content, reports, and settings
+- Public pages: home, search, product details, blog, testimonials, contact
+- Image upload, quick view modal, hero carousel, category/brand sliders
+- Activity logging and basic RBAC (roles/permissions)
 
-## Learning Laravel
+### Repository Structure
+- `app/` Laravel application code (controllers, models, services, providers)
+- `resources/views/` Blade templates for user and admin UIs
+- `public/` Public assets and entrypoint
+- `routes/` Split routes: `user.php` and `admin.php` (auto-selected by port)
+- `docker/` Nginx and Supervisor configs
+- `z_guidelines/` Focused docs for features and maintenance
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Route/Port Behavior
+The provider `App\Providers\PortRouteServiceProvider` loads `routes/user.php` for the user port and `routes/admin.php` for the admin port.
+- Admin routes are served on port `8001`.
+- User routes are served on port `8000` (or the mapped external port in dev).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Getting Started (Docker: Production-like)
+1. Ensure Docker Desktop is running.
+2. From project root, run:
+   - `docker compose up -d --build`
+3. Open:
+   - User: `http://localhost:8000`
+   - Admin: `http://localhost:8001`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Getting Started (Docker: Development)
+Use the `app-dev` service profile for hot reload and Vite.
+1. Run: `docker compose --profile development up -d --build`
+2. Open:
+   - User: `http://localhost:3000`
+   - Admin: `http://localhost:3001`
+   - Vite: `http://localhost:5173`
 
-## Laravel Sponsors
+### Getting Started (Local without Docker)
+Prereqs: PHP 8+, Composer, Node.js, SQLite
+1. Install PHP deps: `composer install`
+2. Install JS deps: `npm install`
+3. Build assets (optional for prod): `npm run build` or start Vite: `npm run dev`
+4. Ensure SQLite exists at `database/database.sqlite` (empty file is fine)
+5. Start servers (Windows): run `start-servers.bat`
+   - User: `http://localhost:8000`
+   - Admin: `http://localhost:8001`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Environment
+- Default DB is SQLite (see `docker-compose.yml` and `.env` if present)
+- In Docker, storage paths are volume-mounted for persistence
+- Increase upload size and caching via Nginx (`docker/default.conf`)
 
-### Premium Partners
+### Useful Scripts
+- `npm run dev` — Start Vite for local development
+- `npm run build` — Production asset build
+- `start-servers.bat` — Launch two `php artisan serve` instances on 8000/8001
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Admin Access
+If seeders create an admin user, check `database/seeders/AdminSeeder.php` for credentials logic. Otherwise, create an admin via the app or tinker.
 
-## Contributing
+### Maintenance Docs
+See `z_guidelines/` for focused docs:
+- Image handling, quick view, logos, favicon, uploads, and troubleshooting
+- Database design and blog section specifics
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Troubleshooting
+- If ports are busy, stop conflicting services or change the left-hand host port mappings in `docker-compose.yml`.
+- If assets don’t load in dev, ensure Vite is running (`npm run dev`) or use the Docker dev profile.
+- For 500 errors, check `storage/logs/laravel.log` and Nginx/PHP-FPM logs (Docker containers).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

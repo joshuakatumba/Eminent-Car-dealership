@@ -1,70 +1,39 @@
-# Git
+# VCS and IDE
 .git
 .gitignore
-.gitattributes
+.github
+.idea
+.vscode
 
-# Documentation
-README.md
-*.md
-docs/
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS files
+# OS junk
 .DS_Store
 Thumbs.db
 
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Laravel
+# Environment files
 .env
-.env.*
-!.env.example
-storage/logs/*
-storage/framework/cache/*
-storage/framework/sessions/*
-storage/framework/views/*
-storage/app/public/*
-!storage/app/public/.gitkeep
+.env.*.local
 
-# Testing
+# Node artifacts (keep built assets available to image)
+node_modules
+npm-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# Laravel caches/logs/temp (keep vendor available to image)
+bootstrap/cache/*.php
+storage/framework/cache/**/*
+storage/framework/sessions/**/*
+storage/framework/views/**/*
+storage/logs/**/*
+
+# Tests and coverage (not needed in image)
+tests
 .phpunit.result.cache
-tests/
-coverage/
+coverage
 
-# Build artifacts
-public/build/
-public/hot/
-public/storage
+# Dev server artifacts
+public/hot
 
-# Docker
-Dockerfile*
-docker-compose*
-.dockerignore
-
-# Temporary files
-*.tmp
-*.temp
-*.log
-
-# Backup files
-*.bak
-*.backup
-
-# Cache directories
-.cache/
-.parcel-cache/
-
-# Development files
-docker/
-docker-compose.yml
-docker-compose.override.yml
+# Documentation and local guidelines
+*.md
+z_guidelines

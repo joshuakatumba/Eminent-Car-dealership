@@ -21,6 +21,5 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withProviders([
         \App\Providers\PortRouteServiceProvider::class,
-        \Laravel\Pail\PailServiceProvider::class,
     ])
     ->create();

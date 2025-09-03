@@ -2159,15 +2159,49 @@ body:has(.blog-posts-listing) .blog-posts-listing .card {
   right: -20px;
 }
 
-.hot-deals-section .arrow-pointer {
+/* Custom SVG Arrow Icon Styling */
+.hot-deals-section .custom-arrow-icon {
   width: 20px;
   height: 20px;
+  color: #007bff;
   transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 }
 
-.hot-deals-section .slick-prev:hover .arrow-pointer,
-.hot-deals-section .slick-next:hover .arrow-pointer {
-  transform: scale(1.2);
+.hot-deals-section .slick-prev:hover .custom-arrow-icon,
+.hot-deals-section .slick-next:hover .custom-arrow-icon {
+  color: #0056b3;
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Enhanced arrow button styling */
+.hot-deals-section .slick-prev,
+.hot-deals-section .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+  border: 1px solid rgba(0, 123, 255, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.hot-deals-section .slick-prev:hover,
+.hot-deals-section .slick-next:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(240, 248, 255, 0.95) 100%);
+  border-color: rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.15);
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* Responsive adjustments for Hot Deals arrows */
@@ -2179,7 +2213,7 @@ body:has(.blog-posts-listing) .blog-posts-listing .card {
     height: 35px;
   }
 
-  .hot-deals-section .arrow-pointer {
+  .hot-deals-section .custom-arrow-icon {
     width: 18px;
     height: 18px;
   }
@@ -2201,7 +2235,7 @@ body:has(.blog-posts-listing) .blog-posts-listing .card {
     height: 30px;
   }
 
-  .hot-deals-section .arrow-pointer {
+  .hot-deals-section .custom-arrow-icon {
     width: 16px;
     height: 16px;
   }
@@ -2259,4 +2293,113 @@ body.blog-read {
 .blog-post .section-padding,
 .blog-read .section-padding {
   background-color: #ffffff !important;
+}
+
+/* Override default Slick theme arrows to use custom SVG */
+.slick-prev:before,
+.slick-next:before {
+  display: none !important;
+}
+
+/* Ensure custom arrows are visible */
+.slick-prev .custom-arrow-icon,
+.slick-next .custom-arrow-icon {
+  display: block !important;
+}
+
+/* Global Custom Arrow Icon Styling for all sliders */
+.custom-arrow-icon {
+  width: 20px;
+  height: 20px;
+  color: #007bff;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.slick-prev:hover .custom-arrow-icon,
+.slick-next:hover .custom-arrow-icon {
+  color: #0056b3;
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Enhanced arrow button styling */
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+  border: 1px solid rgba(0, 123, 255, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(240, 248, 255, 0.95) 100%);
+  border-color: rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.15);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Hot Deals Section Specific Styling */
+.hot-deals-section .slick-prev,
+.hot-deals-section .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+  border: 1px solid rgba(0, 123, 255, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.hot-deals-section .slick-prev:hover,
+.hot-deals-section .slick-next:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(240, 248, 255, 0.95) 100%);
+  border-color: rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.15);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hot-deals-section .slick-prev {
+  left: -20px;
+}
+
+.hot-deals-section .slick-next {
+  right: -20px;
+}
+
+.hot-deals-section .custom-arrow-icon {
+  width: 20px;
+  height: 20px;
+  color: #007bff;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.hot-deals-section .slick-prev:hover .custom-arrow-icon,
+.hot-deals-section .slick-next:hover .custom-arrow-icon {
+  color: #0056b3;
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }

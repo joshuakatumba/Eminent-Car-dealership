@@ -3,9 +3,7 @@
 $(function () {
   "use strict";
 
-  // Set global Slick slider defaults to use arrow icons instead of text
-  $.fn.slick.defaults.prevArrow = "<button type='button' class='slick-prev pull-left'><i class='bi bi-chevron-left'></i></button>";
-  $.fn.slick.defaults.nextArrow = "<button type='button' class='slick-next pull-right'><i class='bi bi-chevron-right'></i></button>";
+  // Global configuration is now set in main.js
 
   // slider
 
@@ -18,8 +16,8 @@ $(function () {
       slidesToShow: 5,
       slidesToScroll: 1,
       autoplay: true,
-      prevArrow: "<button type='button' class='slick-prev pull-left'><i class='bi bi-chevron-left'></i></button>",
-      nextArrow: "<button type='button' class='slick-next pull-right'><i class='bi bi-chevron-right'></i></button>",
+      prevArrow: "<button type='button' class='slick-prev pull-left'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15 18L9 12L15 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
+      nextArrow: "<button type='button' class='slick-next pull-right'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L15 12L9 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
       responsive: [
         {
           breakpoint: 1025,
@@ -65,8 +63,8 @@ $(function () {
       slidesToShow: 5,
       slidesToScroll: 1,
       autoplay: true,
-      prevArrow: "<button type='button' class='slick-prev pull-left'><i class='bi bi-chevron-left'></i></button>",
-      nextArrow: "<button type='button' class='slick-next pull-right'><i class='bi bi-chevron-right'></i></button>",
+      prevArrow: "<button type='button' class='slick-prev pull-left'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15 18L9 12L15 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
+      nextArrow: "<button type='button' class='slick-next pull-right'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L15 12L9 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
       responsive: [
         {
           breakpoint: 1025,
@@ -122,8 +120,8 @@ $(document).ready(function () {
     centerMode: false,
     focusOnSelect: true,
     asNavFor: '.slider-nav',
-    prevArrow: "<button type='button' class='slick-prev pull-left'><i class='bi bi-chevron-left'></i></button>",
-    nextArrow: "<button type='button' class='slick-next pull-right'><i class='bi bi-chevron-right'></i></button>",
+    prevArrow: "<button type='button' class='slick-prev pull-left'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15 18L9 12L15 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
+    nextArrow: "<button type='button' class='slick-next pull-right'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L15 12L9 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
   })
 
   $('.slider-nav').slick({
@@ -134,8 +132,8 @@ $(document).ready(function () {
     arrows: false,
     centerMode: false,
     focusOnSelect: true,
-    prevArrow: "<button type='button' class='slick-prev pull-left'><i class='bi bi-chevron-left'></i></button>",
-    nextArrow: "<button type='button' class='slick-next pull-right'><i class='bi bi-chevron-right'></i></button>",
+    prevArrow: "<button type='button' class='slick-prev pull-left'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15 18L9 12L15 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
+    nextArrow: "<button type='button' class='slick-next pull-right'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L15 12L9 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
   })
 });
 

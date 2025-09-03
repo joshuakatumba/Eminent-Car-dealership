@@ -2,7 +2,9 @@
 $(function() {
 	"use strict";
 
-
+	// Global Slick slider configuration - Override default arrows with custom SVG icons
+	$.fn.slick.defaults.prevArrow = "<button type='button' class='slick-prev pull-left'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15 18L9 12L15 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>";
+	$.fn.slick.defaults.nextArrow = "<button type='button' class='slick-next pull-right'><svg class='custom-arrow-icon' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 18L15 12L9 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></button>";
 
 // Theme switcher 
 

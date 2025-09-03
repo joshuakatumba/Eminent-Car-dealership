@@ -11,7 +11,7 @@
     
     <!--start page content-->
     <div class="page-content">
-        @include('components.shared.breadcrumb-blog-post')
+        {{-- @include('components.shared.breadcrumb-blog-post') --}}
         
         <!--start blog post details-->
         <section class="section-padding">

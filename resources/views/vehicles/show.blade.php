@@ -8,9 +8,9 @@
 
 @section('content')
     @include('components.shared.header')
-    @include('components.shared.breadcrumb-vehicle-details')
+    {{-- @include('components.shared.breadcrumb-vehicle-details') --}}
 
-    <!-- Logo Section -->
+    {{-- <!-- Logo Section -->
     <section class="py-3 bg-light">
         <div class="container">
             <div class="row justify-content-center">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!--start product details-->
     <section class="py-4">
@@ -83,6 +83,8 @@
 @endsection
 
 @push('scripts')
+<!-- Bootstrap JavaScript - Required for modals -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/pace.min.js') }}"></script>
 <script src="{{ asset('assets/js/loader.js') }}"></script>

@@ -29,7 +29,7 @@
                             <h4 class="card-title fw-bold mt-3">{{ $post->title }}</h4>
                     <p class="mb-0">{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 200) }}</p>
                     
-                    @if($post->tags)
+                    {{-- @if($post->tags)
                       <div class="mt-3 mb-3">
                         @foreach(explode(',', $post->tags) as $tag)
                           <a href="{{ route('blog.index', ['tag' => trim($tag)]) }}" class="badge bg-light text-dark me-1 text-decoration-none">
@@ -37,7 +37,7 @@
                           </a>
                         @endforeach
                       </div>
-                    @endif
+                    @endif --}}
                     
 
       </div>

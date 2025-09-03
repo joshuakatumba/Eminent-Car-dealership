@@ -241,7 +241,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Update About Us Content</button>
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                                <!-- Removed dashboard link intentionally -->
                             </div>
                         </div>
                     </form>

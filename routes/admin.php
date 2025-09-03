@@ -14,23 +14,23 @@ use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Auth\LoginController;
 
 // Admin Login Routes (no middleware - anyone can access login)
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
 // Logout routes (no middleware - should be accessible)
-Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
-Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout.get');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout.get');
 
-// Redirect root to vehicles if authenticated, otherwise to login
+// Redirect /admin root to vehicles if authenticated, otherwise to login
 Route::get('/', function () {
     if (!auth()->check()) {
         return redirect()->route('admin.login');
     }
     return redirect()->route('admin.vehicles.index');
-})->name('admin.root');
+})->name('root');
 
 // Admin Routes - Protected with admin.auth and admin middleware
-Route::middleware(['admin.auth', 'admin'])->name('admin.')->group(function () {
+Route::middleware(['admin.auth', 'admin'])->group(function () {
     
     // Admin Index/Home - redirects to vehicles
     Route::get('/home', function () {

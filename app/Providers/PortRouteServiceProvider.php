@@ -31,23 +31,9 @@ class PortRouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // For artisan commands or when no request context, load both routes
-        if (app()->runningInConsole() || !request()->getPort()) {
-            $this->mapUserRoutes();
-            $this->mapAdminRoutes();
-            return;
-        }
-        
-        // Detect the port and load appropriate routes
-        $port = $this->getPort();
-        
-        if ($port == 8001) {
-            // Admin routes on port 8001
-            $this->mapAdminRoutes();
-        } else {
-            // User routes on port 8000 (default)
-            $this->mapUserRoutes();
-        }
+        // Always load both user and admin routes so admin is available under /admin on port 8000
+        $this->mapUserRoutes();
+        $this->mapAdminRoutes();
     }
     
     /**
@@ -78,6 +64,8 @@ class PortRouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes(): void
     {
         Route::middleware('web')
+            ->prefix('admin')
+            ->as('admin.')
             ->group(base_path('routes/admin.php'));
     }
 

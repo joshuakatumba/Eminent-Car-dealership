@@ -29,8 +29,8 @@ class LoginController extends Controller
             // Log the login activity
             ActivityService::logLogin(Auth::user());
 
-            // Redirect to vehicles page after login (without /admin prefix since routes are already prefixed)
-            return redirect()->intended('/vehicles');
+            // Redirect to admin vehicles index after login
+            return redirect()->intended(route('admin.vehicles.index'));
         }
 
         return back()->withErrors([
@@ -50,7 +50,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // Simple redirect to admin login page (without /admin prefix since routes are already prefixed)
-        return redirect('/login');
+        // Redirect to admin login page
+        return redirect()->route('admin.login');
     }
 }

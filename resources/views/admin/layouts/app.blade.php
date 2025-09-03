@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Dashboard') - Eminent Car Dealership</title>
+    <title>@yield('title', 'Admin Panel') - Eminent Car Dealership</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon-admin.svg') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon-32x32.png') }}">
@@ -306,6 +306,40 @@
             .sidebar-toggle {
                 display: block;
             }
+            
+            /* Make header sticky on small screens */
+            .admin-header {
+                position: sticky;
+                top: 0;
+                z-index: 1100;
+            }
+            
+            /* Utilities to stack elements on mobile */
+            .mobile-stack > * {
+                width: 100% !important;
+                margin-bottom: 10px !important;
+            }
+            .btn-group-mobile .btn {
+                width: 100% !important;
+                margin-bottom: 10px !important;
+            }
+        }
+        
+        /* Sidebar overlay for mobile */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999; /* below sidebar (1000) */
+            display: none;
+        }
+        .sidebar-overlay.show {
+            display: block;
+        }
+        
+        /* Prevent body scroll when sidebar is open */
+        body.no-scroll {
+            overflow: hidden;
         }
     </style>
 </head>
@@ -409,12 +443,14 @@
             </li>
             
             <li class="nav-item mt-4">
-                <a class="nav-link" href="http://localhost:8000">
+                <a class="nav-link" href="{{ url('/') }}">
                     <i class="fas fa-home"></i> Back to Site
                 </a>
             </li>
         </ul>
     </nav>
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Main Content -->
     <div class="admin-main">
@@ -424,7 +460,7 @@
                  <button class="sidebar-toggle me-3" id="sidebarToggle">
                      <i class="fas fa-bars"></i>
                  </button>
-                 <h1 class="mb-0">@yield('title', 'Dashboard')</h1>
+                 <h1 class="mb-0">@yield('title', 'Admin Panel')</h1>
              </div>
             
             <div class="user-dropdown">
@@ -491,7 +527,33 @@
     <script>
         // Sidebar toggle for mobile
         document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.getElementById('adminSidebar').classList.toggle('show');
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const willShow = !sidebar.classList.contains('show');
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show', willShow);
+            document.body.classList.toggle('no-scroll', willShow);
+        });
+
+        // Close sidebar when clicking on overlay
+        document.getElementById('sidebarOverlay').addEventListener('click', function() {
+            const sidebar = document.getElementById('adminSidebar');
+            this.classList.remove('show');
+            sidebar.classList.remove('show');
+            document.body.classList.remove('no-scroll');
+        });
+
+        // Auto-close sidebar when a nav link is tapped on mobile
+        Array.from(document.querySelectorAll('.admin-sidebar .nav-link')).forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.getElementById('adminSidebar');
+                    const overlay = document.getElementById('sidebarOverlay');
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
         });
 
         // Auto-hide alerts after 5 seconds
